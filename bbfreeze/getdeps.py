@@ -74,7 +74,10 @@ if sys.platform == 'win32':
         """Find the binary dependencies of PTH.
 
             This implementation walks through the PE header"""
-        import pefile
+        try:
+            import pefile
+        except ImportError:
+            raise ImportError('pefile not installed, install with "pip install pefile"')
         try:
             pe = pefile.PE(path, True)
             dlls = [x.dll for x in pe.DIRECTORY_ENTRY_IMPORT]
