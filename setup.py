@@ -16,10 +16,10 @@ version = get_version()
 
 
 def main():
-    install_requires = ["altgraph==0.9", "bbfreeze-loader>=1.1.0,<1.2.0"]
+    install_requires = ["altgraph>=0.12", "bbfreeze-loader>=1.1.0,<1.2.0"]
 
     if sys.platform == 'win32':
-        install_requires.append("pefile>=1.2.4")
+        install_requires.append("pefile")
 
     setup(name="bbfreeze",
           version=version,
