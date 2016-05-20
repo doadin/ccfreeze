@@ -5,8 +5,8 @@ bbfreeze - create stand-alone executables from python scripts
 ======================================================================
 
 :Authors: Ralf Schmitt <ralf@systemexit.de>
-:Version: 1.1.3
-:Date:    2014-01-20
+:Version: 1.1.4
+:Date:    2016-05-19
 :Download: https://pypi.python.org/pypi/bbfreeze/#downloads
 :Code: https://github.com/schmir/bbfreeze
 
