@@ -1,7 +1,10 @@
 #! /usr/bin/env py.test
 
-import os, sys
+import os
+import sys
+
 import bbfreeze
+
 
 def test_icon():
     pass

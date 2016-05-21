@@ -1,27 +1,30 @@
 #! /usr/bin/env python
 
-import sys, os, re, commands
+import commands
+import os
+import re
+import sys
 
 if sys.platform == 'win32':
 
     # -----------------------
-    ## http://mail.python.org/pipermail/python-win32/2005-June/003446.html:
+    # http://mail.python.org/pipermail/python-win32/2005-June/003446.html:
     ##
-    ## Using it I found this: win32net.pyd from build 204 does *not* use the
-    ## LsaLookupNames2 function in advapi32.dll.  However, win32net.pyd links
-    ## to netapi32.dll (among others), and netapi32.dll links to advapi32.dll,
-    ## using the name LsaLookupNames2.  This was on WinXP.
+    # Using it I found this: win32net.pyd from build 204 does *not* use the
+    # LsaLookupNames2 function in advapi32.dll.  However, win32net.pyd links
+    # to netapi32.dll (among others), and netapi32.dll links to advapi32.dll,
+    # using the name LsaLookupNames2.  This was on WinXP.
 
-    ## On win2k, netapi32.dll will not link to advapi32's LsaLookupNames2 -
-    ## otherwise it would not work.
+    # On win2k, netapi32.dll will not link to advapi32's LsaLookupNames2 -
+    # otherwise it would not work.
 
-    ## So, your exe *should* be able to run on win2k - except if you distribute
-    ## XP's netapi32.dll with your exe (I've checked this with a trivial
-    ## py2exe'd script).
+    # So, your exe *should* be able to run on win2k - except if you distribute
+    # XP's netapi32.dll with your exe (I've checked this with a trivial
+    # py2exe'd script).
     #
     # ----> EXCLUDE NETAPI32.DLL
 
-    #-----------------------------------------
+    # -----------------------------------------
     # as found on the internet:
     # shlwapi.dll is installed as a tied component of Internet Explorer, and
     # the version should always match that of the installed version of Internet Explorer
@@ -131,7 +134,7 @@ if sys.platform == 'win32':
 
     def exclude(fp):
         u = os.path.basename(fp).upper()
-        return  u in excludes or u.startswith("API-MS-WIN-")
+        return u in excludes or u.startswith("API-MS-WIN-")
 
 elif sys.platform.startswith("freebsd"):
 

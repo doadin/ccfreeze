@@ -1,6 +1,9 @@
 #! /usr/bin/env python
 
-import sys, os, zlib, zipimport
+import os
+import sys
+import zipimport
+import zlib
 
 installdir = os.path.normpath(os.path.dirname(sys.path[0]))  # sys.path[0] == '.../library.zip'
 
@@ -21,7 +24,7 @@ def addldlibrarypath():
     else:
         LD_LIBRARY_PATH = 'LD_LIBRARY_PATH'
 
-    #p = os.path.normpath(os.path.dirname(sys.executable))
+    # p = os.path.normpath(os.path.dirname(sys.executable))
     p = installdir
     try:
         paths = os.environ[LD_LIBRARY_PATH].split(os.pathsep)
@@ -31,7 +34,7 @@ def addldlibrarypath():
     if p not in paths:
         paths.insert(0, p)
         os.environ[LD_LIBRARY_PATH] = os.pathsep.join(paths)
-        #print "SETTING", LD_LIBRARY_PATH, os.environ[LD_LIBRARY_PATH]
+        # print "SETTING", LD_LIBRARY_PATH, os.environ[LD_LIBRARY_PATH]
         os.execv(sys.executable, sys.argv)
 
 
@@ -46,7 +49,7 @@ def addpath():
     if p not in paths:
         paths.insert(0, p)
         os.environ['PATH'] = os.pathsep.join(paths)
-        #print "SETTING PATH:", os.environ['PATH']
+        # print "SETTING PATH:", os.environ['PATH']
 
 
 def addtcltk():
@@ -84,11 +87,11 @@ else:
     win32com.gen_py.__path__=[tmpdir]
 """
 
-#print "EXE:", sys.executable
-#print "SYS.PATH:", sys.path
+# print "EXE:", sys.executable
+# print "SYS.PATH:", sys.path
 
 addpath()
-#if sys.platform!='win32': # and hasattr(os, 'execv'):
+# if sys.platform!='win32': # and hasattr(os, 'execv'):
 #    addldlibrarypath()
 
 addtcltk()

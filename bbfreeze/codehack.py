@@ -24,7 +24,7 @@ def replace_functions(co, repl):
                 print "codehack: replaced %s in %s" % (c.co_name, co.co_filename)
 
     return new.code(co.co_argcount, co.co_nlocals, co.co_stacksize,
-                     co.co_flags, co.co_code, tuple(consts), co.co_names,
-                     co.co_varnames, co.co_filename, co.co_name,
-                     co.co_firstlineno, co.co_lnotab,
-                     co.co_freevars, co.co_cellvars)
+                    co.co_flags, co.co_code, tuple(consts), co.co_names,
+                    co.co_varnames, co.co_filename, co.co_name,
+                    co.co_firstlineno, co.co_lnotab,
+                    co.co_freevars, co.co_cellvars)

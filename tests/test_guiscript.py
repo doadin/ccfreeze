@@ -5,6 +5,7 @@ except:
     win32ui = None
 
 import os
+
 import bbfreeze
 
 if win32ui:

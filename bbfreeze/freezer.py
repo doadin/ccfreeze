@@ -1,16 +1,19 @@
+import commands
+import imp
 import os
-import sys
 import re
-import time
 import shutil
 import struct
+import sys
+import time
 import zipfile
-import imp
-import marshal
 import zipimport
-import commands
 
+from bbfreeze import eggutil, recipes
+
+import marshal
 from modulegraph import modulegraph
+
 modulegraph.replacePackage("_xmlplus", "xml")
 
 # workaround for win32com hacks.
@@ -38,8 +41,6 @@ except ImportError:
 else:
     for p in xml.__path__:
         modulegraph.addPackagePath("xml", p)
-
-from bbfreeze import recipes, eggutil
 
 try:
     import pkg_resources
@@ -129,7 +130,7 @@ class EggAnalyzer(object):
                 if dist.has_metadata("namespace_packages.txt"):
                     ns = list(dist.get_metadata_lines("namespace_packages.txt"))
                     if isinstance(m, modulegraph.Package) and m.identifier in ns:
-                        #print "SKIP:", ns, m
+                        # print "SKIP:", ns, m
                         return None
 
                 self.add(dist)
@@ -225,7 +226,7 @@ class MyModuleGraph(modulegraph.ModuleGraph):
         zi = zipimport.zipimporter(p)
         m = zi.find_module(fullname.replace(".", "/"))
         if m:
-            code = zi.get_code(fullname.replace(".", "/"))
+            # code = zi.get_code(fullname.replace(".", "/"))
             return zi, p, ('', '', 314)
         raise err
 
@@ -242,7 +243,7 @@ class MyModuleGraph(modulegraph.ModuleGraph):
         else:
             fullname = name
 
-        #print "FIND_MODULE:", name, path, parent
+        # print "FIND_MODULE:", name, path, parent
 
         if path is None:
             path = self.path
@@ -261,7 +262,7 @@ class MyModuleGraph(modulegraph.ModuleGraph):
                 if p in paths_seen:
                     continue
                 paths_seen.add(p)
-                #res = modulegraph.ModuleGraph.find_module(self, name, [p], parent)
+                # res = modulegraph.ModuleGraph.find_module(self, name, [p], parent)
                 res = self._find_single_path(name, p, parent)
                 if found:
                     if res[2][2] == imp.PKG_DIRECTORY:
@@ -317,6 +318,7 @@ def replace_paths_in_code(co, newname):
                      co.co_firstlineno, co.co_lnotab,
                      co.co_freevars, co.co_cellvars)
 
+
 def make_extension_loader(modname):
     src = """
 def _bbfreeze_import_dynamic_module():
@@ -359,11 +361,10 @@ _bbfreeze_import_dynamic_module()
     return src
 
 
-
 def get_implies():
     implies = {
         "wxPython.wx": modulegraph.Alias('wx'),
-        }
+    }
 
     try:
         from email import _LOWERNAMES, _MIMENAMES
@@ -460,8 +461,8 @@ if __name__ == '__main__':
         else:
             if name not in sys.builtin_module_names:
                 self.mf.import_hook(name)
+        # self.mf.report()
 
-    
     def setIcon(self, filename):
         self.icon = filename
 
@@ -770,7 +771,7 @@ if __name__ == '__main__':
             else:
                 shutil.copy2(self.console, dst)
             os.chmod(dst, 0755)
-            
+
             if self.icon and sys.platform == 'win32':
                 try:
                     from bbfreeze import winexeutil

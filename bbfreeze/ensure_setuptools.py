@@ -16,8 +16,11 @@ or
   python -c 'from bbfreeze import ensure_setuptools; ensure_setuptools.main()' setup.py bdist_egg
 """
 
-import sys, __main__
+import sys
+
 import setuptools  # don't remove
+
+import __main__
 
 
 def main():

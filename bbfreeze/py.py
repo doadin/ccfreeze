@@ -5,6 +5,9 @@
 # (http://matplotlib.sourceforge.net/examples/interactive.py)
 
 import sys
+import time
+from code import InteractiveConsole
+
 main = __import__("__main__")
 
 
@@ -61,8 +64,6 @@ if sys.argv[0]:
     sys.exit(0)
 
 
-from code import InteractiveConsole
-import time
 try:
     # rlcompleter also depends on readline
     import rlcompleter

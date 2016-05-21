@@ -1,4 +1,4 @@
-#import wx
+# import wx
 from wxPython.wx import *
 
 

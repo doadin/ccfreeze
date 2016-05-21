@@ -1,3 +1,10 @@
+import os
+from distutils import log
+from distutils.util import get_platform
+
+from pkg_resources import Distribution, PathMetadata, normalize_path
+from setuptools.command.easy_install import easy_install, get_script_args
+
 """bbfreeze.bdist_bbfreeze
 
 Implements the distutils 'bdist_bbfreeze' command.
@@ -7,14 +14,6 @@ __author__ = "Hartmut Goebel <h.goebel@goebel-consult.de>"
 __copyright__ = "Copyright 2008 by Hartmut Goebel <h.goebel@goebel-consult.de>"
 __licence__ = "Same as bbfreeze"
 __version__ = "0.1"
-
-import os
-
-from distutils.util import get_platform
-from distutils import log
-
-from setuptools.command.easy_install import easy_install, get_script_args
-from pkg_resources import Distribution, PathMetadata, normalize_path
 
 
 class bdist_bbfreeze(easy_install):
@@ -33,7 +32,7 @@ class bdist_bbfreeze(easy_install):
          "directory to put final built distributions in "
          "[default: dist/<egg_name-egg_version>]"),
         # todo: include_py
-        ]
+    ]
 
     boolean_options = []
     negative_opt = {}

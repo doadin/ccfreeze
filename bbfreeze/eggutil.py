@@ -1,13 +1,14 @@
 #! /usr/bin/env python
 
-import sys
+import imp
 import os
 import stat
-import zipfile
 import struct
-import imp
-import marshal
+import sys
 import time
+import zipfile
+
+import marshal
 
 
 class Entry(object):
@@ -123,9 +124,9 @@ def copyDistribution(distribution, destdir):
     import pkg_resources
     location = distribution.location
 
-    if (isinstance(distribution._provider, pkg_resources.PathMetadata)
-        and not distribution.location.lower().endswith(".egg")
-        and os.path.exists(os.path.join(distribution.location, "setup.py"))):
+    if (isinstance(distribution._provider, pkg_resources.PathMetadata) and not
+        distribution.location.lower().endswith(".egg") and
+        os.path.exists(os.path.join(distribution.location, "setup.py"))):
         # this seems to be a development egg. FIXME the above test looks fragile
 
         setuptools_dist = pkg_resources.working_set.find(pkg_resources.Requirement.parse("setuptools"))

@@ -1,5 +1,5 @@
-import sys
 import os
+import sys
 
 
 def isRealModule(m):
@@ -315,7 +315,7 @@ def recipe_cElementTree(mf):
     if not isRealModule(m):
         return None
 
-    #mf.import_hook("pyexpat", m, "*")
+    # mf.import_hook("pyexpat", m, "*")
     mf.import_hook("elementtree.ElementTree")
     return True
 

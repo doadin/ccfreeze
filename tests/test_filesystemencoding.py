@@ -1,6 +1,9 @@
 #! /usr/bin/env py.test
 
-import py, sys, os
+import os
+import sys
+
+import py
 
 pyexe = py.path.local(sys.executable)
 

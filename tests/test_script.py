@@ -1,6 +1,7 @@
 #! /usr/bin/env py.test
 
-import sys, os
+import os
+import sys
 
 
 def fullpath(x):
@@ -59,4 +60,3 @@ if sys.platform == 'win32':
 
     def test_pywintypes():
         maybe_compile_and_run("ex-pywintypes.py")
-

@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 
-import sys
 import email
+import sys
 
 print unicode("hello", "utf8"), unicode("world!", "ascii")
 
