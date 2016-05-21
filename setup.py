@@ -4,16 +4,7 @@ import sys
 
 from setuptools import setup
 
-
-def get_version():
-    d = {}
-    try:
-        execfile("bbfreeze/__init__.py", d)
-    except Exception:
-        pass
-    return d["__version__"]
-
-version = get_version()
+version = "1.1.4"
 
 
 def main():
