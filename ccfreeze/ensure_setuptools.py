@@ -3,17 +3,17 @@
 """
 The sole purpose of this file is to start setup.py scripts with
 setuptools already imported. 'pip install -e ...' installs
-non-setuptools packages that look like development eggs. bbfreeze runs
+non-setuptools packages that look like development eggs. ccfreeze runs
 setup.py bdist_egg for these, but that won't work since setuptools
 didn't install it's code.
 
 Can be used like:
 
-  python -m bbfreeze.ensure_setuptools setup.py bdist_egg
+  python -m ccfreeze.ensure_setuptools setup.py bdist_egg
 
 or
 
-  python -c 'from bbfreeze import ensure_setuptools; ensure_setuptools.main()' setup.py bdist_egg
+  python -c 'from ccfreeze import ensure_setuptools; ensure_setuptools.main()' setup.py bdist_egg
 """
 
 import sys

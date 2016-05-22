@@ -1,5 +1,5 @@
 #! /usr/bin/env python
 
 if __name__ == '__main__':
-    from bbfreeze import main
+    from ccfreeze import main
     main()

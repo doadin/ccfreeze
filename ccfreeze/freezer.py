@@ -9,7 +9,7 @@ import time
 import zipfile
 import zipimport
 
-from bbfreeze import eggutil, recipes
+from ccfreeze import eggutil, recipes
 
 import marshal
 from modulegraph import modulegraph
@@ -47,7 +47,7 @@ try:
 except ImportError:
     pkg_resources = None
 
-dont_copy_as_egg = set(["bbfreeze", "PyXML"])
+dont_copy_as_egg = set(["ccfreeze", "PyXML"])
 
 
 def normalize_pkgname(name):
@@ -165,8 +165,8 @@ class EggAnalyzer(object):
 
 
 def fullname(p):
-    import _bbfreeze_loader
-    return os.path.join(os.path.dirname(_bbfreeze_loader.__file__), p)
+    import _ccfreeze_loader
+    return os.path.join(os.path.dirname(_ccfreeze_loader.__file__), p)
 
 
 def getRecipes():
@@ -321,9 +321,9 @@ def replace_paths_in_code(co, newname):
 
 def make_extension_loader(modname):
     src = """
-def _bbfreeze_import_dynamic_module():
-    global _bbfreeze_import_dynamic_module
-    del _bbfreeze_import_dynamic_module
+def _ccfreeze_import_dynamic_module():
+    global _ccfreeze_import_dynamic_module
+    del _ccfreeze_import_dynamic_module
 """
     if sys.version_info[:2] < (2, 5):
         src += """
@@ -355,7 +355,7 @@ def _bbfreeze_import_dynamic_module():
         finally:
             del sys.modules[__name__]
 
-_bbfreeze_import_dynamic_module()
+_ccfreeze_import_dynamic_module()
 """ % modname
 
     return src
@@ -491,7 +491,7 @@ if __name__ == '__main__':
         shutil.copytree(n.filename, os.path.join(self.distdir, n.dest))
 
     def addExecutable(self, exe):
-        from bbfreeze import getdeps
+        from ccfreeze import getdeps
         e = self.mf.createNode(Executable, os.path.basename(exe))
         e.filename = exe
         self.mf.createReference(self.mf, e)
@@ -502,7 +502,7 @@ if __name__ == '__main__':
             self.mf.createReference(e, n)
 
     def findBinaryDependencies(self):
-        from bbfreeze import getdeps
+        from ccfreeze import getdeps
         assert os.access(self.console, os.X_OK), "%r is not executable" % (self.console,)
 
         for so in getdeps.getDependencies(self.console):
@@ -584,7 +584,7 @@ if __name__ == '__main__':
 
         # work around easy_install which doesn't preserve the
         # executable bit
-        xconsole = os.path.join(self.distdir, "bbfreeze-console.exe")
+        xconsole = os.path.join(self.distdir, "ccfreeze-console.exe")
         shutil.copy2(self.console, xconsole)
         os.chmod(xconsole, 0755)
         self.console = xconsole
@@ -777,7 +777,7 @@ if __name__ == '__main__':
 
             if self.icon and sys.platform == 'win32':
                 try:
-                    from bbfreeze import winexeutil
+                    from ccfreeze import winexeutil
                     # Set executable icon
                     winexeutil.set_icon(dst, self.icon)
                 except ImportError, e:

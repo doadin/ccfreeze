@@ -69,7 +69,7 @@ def fixwin32com():
     if sys.platform != 'win32':
         return
 
-    # hide imports by using exec. bbfreeze analyzes this file.
+    # hide imports by using exec. ccfreeze analyzes this file.
     exec """
 try:
     import win32com.client

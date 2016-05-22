@@ -16,7 +16,7 @@ def include_whole_package(name, skip=lambda x: False):
         if not isRealModule(m):
             return None
 
-        from bbfreeze.freezer import ZipModule
+        from ccfreeze.freezer import ZipModule
         if isinstance(m, ZipModule):
             return None
 
@@ -47,7 +47,7 @@ def find_all_packages(name, skip=lambda x: False):
         if not isRealModule(m):
             return None
 
-        from bbfreeze.freezer import ZipModule
+        from ccfreeze.freezer import ZipModule
         if isinstance(m, ZipModule):
             return None
 
@@ -173,7 +173,7 @@ def recipe_pythoncom(mf):
     if not isRealModule(m):
         return None
     import pythoncom
-    from bbfreeze.freezer import SharedLibrary
+    from ccfreeze.freezer import SharedLibrary
     n = mf.createNode(SharedLibrary, os.path.basename(pythoncom.__file__))
     n.filename = pythoncom.__file__
     mf.createReference(m, n)
@@ -186,7 +186,7 @@ def recipe_pywintypes(mf):
     if not isRealModule(m):
         return None
     import pywintypes
-    from bbfreeze.freezer import SharedLibrary
+    from ccfreeze.freezer import SharedLibrary
     n = mf.createNode(SharedLibrary, os.path.basename(pywintypes.__file__))
     n.filename = pywintypes.__file__
     mf.createReference(m, n)
@@ -260,7 +260,7 @@ def recipe_tkinter(mf):
             print "WARNING: recipe_tkinter: TK_LIBRARY not set. cannot find lib-tk"
     else:
         import _tkinter
-        from bbfreeze import getdeps
+        from ccfreeze import getdeps
 
         deps = getdeps.getDependencies(_tkinter.__file__)
         for x in deps:
@@ -280,7 +280,7 @@ def recipe_tkinter(mf):
 
 def recipe_gtk_and_friends(mf):
     retval = False
-    from bbfreeze.freezer import SharedLibrary
+    from ccfreeze.freezer import SharedLibrary
     from modulegraph.modulegraph import ExcludedModule
     for x in list(mf.flatten()):
         if not isinstance(x, SharedLibrary):

@@ -4,7 +4,7 @@ import sys
 
 if sys.version_info >= (2, 5):
     def test_freeze_relimport():
-        from bbfreeze import Freezer
+        from ccfreeze import Freezer
         f = Freezer(includes=['relimport'])
         f()
 

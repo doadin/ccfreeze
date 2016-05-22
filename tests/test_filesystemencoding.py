@@ -16,7 +16,7 @@ def check_encoding():
 
 
 def test_getfilesystemencoding(monkeypatch):
-    os.system("bbfreeze ex-fsenc.py")
+    os.system("ccfreeze ex-fsenc.py")
 
     monkeypatch.setenv("LANG", "en_US.UTF-8")
     check_encoding()

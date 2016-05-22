@@ -1,10 +1,10 @@
 version = "1.1.4"
 
 import sys
-from bbfreeze import modulegraph
+from ccfreeze import modulegraph
 sys.modules['modulegraph'] = modulegraph
 
-from bbfreeze.freezer import Freezer
+from ccfreeze.freezer import Freezer
 
 version = "1.1.4"
 
@@ -13,7 +13,7 @@ def main():
     scripts = sys.argv[1:]
     if not scripts:
         print "Version: %s (Python %s)" % (version)
-        print "Usage: bbfreeze SCRIPT1 [SCRIPT2...]"
+        print "Usage: ccfreeze SCRIPT1 [SCRIPT2...]"
         print "   creates standalone executables from python scripts SCRIPT1,..."
         print
 

@@ -34,7 +34,7 @@ class Entry(object):
         mtime = data[4:8]
 
         code = marshal.loads(data[8:])
-        from bbfreeze import freezer
+        from ccfreeze import freezer
         code = freezer.replace_paths_in_code(code, self.name)
         return "".join([imp.get_magic(), mtime, marshal.dumps(code)])
 

@@ -14,8 +14,8 @@
 .ropeproject
 ID
 __pycache__/
-bbfreeze/*.exe
-bbfreeze.egg-info
+ccfreeze/*.exe
+ccfreeze.egg-info
 tests/dist
 dist/
 build/
