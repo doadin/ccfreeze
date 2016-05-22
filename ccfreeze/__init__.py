@@ -12,7 +12,7 @@ version = "1.1.4"
 def main():
     scripts = sys.argv[1:]
     if not scripts:
-        print "Version: %s (Python %s)" % (version)
+        print "Version: %s (Python %s)" % (version, ".".join([str(x) for x in sys.version_info]))
         print "Usage: ccfreeze SCRIPT1 [SCRIPT2...]"
         print "   creates standalone executables from python scripts SCRIPT1,..."
         print
