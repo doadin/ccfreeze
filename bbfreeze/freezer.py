@@ -668,9 +668,12 @@ if __name__ == '__main__':
         pass
 
     def _handle_NamespacePackage(self, m):
-        fn = "%s/__init__.py" % (m.identifier.replace(".", "/"),)
-        code = compile("", fn, "exec")
-        self._writecode(fn + "c", time.time(), code)
+        if m.identifier == "zope":
+            fn = "%s/__init__.py" % (m.identifier.replace(".", "/"),)
+            code = compile("", fn, "exec")
+            self._writecode(fn + "c", time.time(), code)
+        else:
+            pass
 
     def _handle_Extension(self, m):
         name = m.identifier
