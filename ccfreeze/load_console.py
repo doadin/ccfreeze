@@ -70,7 +70,7 @@ def fixwin32com():
         return
 
     # hide imports by using exec. ccfreeze analyzes this file.
-    exec("""
+    exec """
 try:
     import win32com.client
     import win32com.gen_py
@@ -85,7 +85,7 @@ else:
         os.makedirs(tmpdir)
     win32com.__gen_path__ = tmpdir
     win32com.gen_py.__path__=[tmpdir]
-""")
+"""
 
 # print "EXE:", sys.executable
 # print "SYS.PATH:", sys.path
@@ -118,7 +118,7 @@ while 1:
     # if exe is a-b-c, try loading a-b-c, a-b and a
     try:
         code = importer.get_code("__main__%s__" % exe)
-    except zipimport.ZipImportError as err:
+    except zipimport.ZipImportError, err:
         if '-' in exe:
             exe = exe[:exe.find('-')]
         else:
@@ -126,6 +126,6 @@ while 1:
     else:
         break
 if exe == "py":
-    exec(code)
+    exec code
 else:
-    exec(code, m.__dict__)
+    exec code in m.__dict__

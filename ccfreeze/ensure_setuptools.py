@@ -20,14 +20,14 @@ import sys
 
 import setuptools  # don't remove
 
-from . import __main__
+import __main__
 
 
 def main():
     del sys.argv[0]
     d = __main__.__dict__
     __main__.__file__ = sys.argv[0]
-    exec(compile(open(sys.argv[0]).read(), sys.argv[0], 'exec'), d, d)
+    execfile(sys.argv[0], d, d)
 
 
 if __name__ == "__main__":

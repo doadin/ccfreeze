@@ -4,8 +4,8 @@ from pylab import plot, show
 
 
 def main():
-    x = list(range(10))
-    y = list(range(10))
+    x = range(10)
+    y = range(10)
 
     plot(x, y)
     show()
