@@ -1,4 +1,4 @@
-import commands
+import subprocess
 import imp
 import os
 import re
@@ -12,7 +12,7 @@ import zipimport
 from ccfreeze import eggutil, recipes
 
 import marshal
-from modulegraph import modulegraph
+from .modulegraph import modulegraph
 
 modulegraph.replacePackage("_xmlplus", "xml")
 
@@ -72,7 +72,7 @@ class EggAnalyzer(object):
         deps = pkg_resources.working_set.resolve(dist.requires())
         for x in deps:
             if x not in self.used:
-                print "adding %s as a dependency of %s" % (x, dist)
+                print("adding %s as a dependency of %s" % (x, dist))
                 self.used.add(x)
 
     def usableWorkingSet(self):
@@ -140,11 +140,11 @@ class EggAnalyzer(object):
         tmp = [(x.project_name, x) for x in self.used]
         tmp.sort()
         if tmp:
-            print "=" * 50
-            print "The following eggs are being used:"
+            print("=" * 50)
+            print("The following eggs are being used:")
             for x in tmp:
-                print repr(x[1])
-            print "=" * 50
+                print(repr(x[1]))
+            print("=" * 50)
 
     def copy(self, destdir):
         for x in self.used:
@@ -154,9 +154,9 @@ class EggAnalyzer(object):
                 try:
                     path = getattr(x._provider, "egg_info", None) or x._provider.path
                 except AttributeError:
-                    print "Warning: cannot copy egg-info for", x
+                    print("Warning: cannot copy egg-info for", x)
                     continue
-                print "Copying egg-info of %s from %r" % (x, path)
+                print("Copying egg-info of %s from %r" % (x, path))
                 if os.path.isdir(path):
                     basename = "%s.egg-info" % x.project_name
                     shutil.copytree(path, os.path.join(destdir, basename))
@@ -217,7 +217,7 @@ class MyModuleGraph(modulegraph.ModuleGraph):
 
         try:
             return modulegraph.ModuleGraph.find_module(self, name, [p], parent)
-        except ImportError, err:
+        except ImportError as err:
             pass
 
         if not os.path.isfile(p):
@@ -272,12 +272,12 @@ class MyModuleGraph(modulegraph.ModuleGraph):
                         append_if_uniq(res)
                     else:
                         return res
-            except ImportError, err:
+            except ImportError as err:
                 pass
 
         if len(found) > 1:
-            print "WARNING: found %s in multiple directories. Assuming it's a namespace package. (found in %s)" % (
-                fullname, ", ".join(x[1] for x in found))
+            print("WARNING: found %s in multiple directories. Assuming it's a namespace package. (found in %s)" % (
+                fullname, ", ".join(x[1] for x in found)))
             for x in found[1:]:
                 modulegraph.addPackagePath(fullname, x[1])
 
@@ -286,7 +286,8 @@ class MyModuleGraph(modulegraph.ModuleGraph):
 
         raise err
 
-    def load_module(self, fqname, fp, pathname, (suffix, mode, typ)):
+    def load_module(self, fqname, fp, pathname, xxx_todo_changeme):
+        (suffix, mode, typ) = xxx_todo_changeme
         if typ == 314:
             m = self.createNode(ZipModule, fqname)
             code = fp.get_code(fqname.replace(".", "/"))
@@ -426,10 +427,10 @@ class Freezer(object):
         for line in lines:
             if line.startswith(eicomment):
                 values = [x.strip("'\"") for x in line[len(eicomment):].strip().split(",")]
-                print path, "is an easy install entry script. running pkg_resources.require(%r)" % (values[0],)
+                print(path, "is an easy install entry script. running pkg_resources.require(%r)" % (values[0],))
                 pkg_resources.require(values[0])
                 ep = pkg_resources.get_entry_info(*values)
-                print "entry point is", ep
+                print("entry point is", ep)
                 return ep.module_name
         return None
 
@@ -482,7 +483,7 @@ if __name__ == '__main__':
         numApplied = 0
         for x in self._recipes:
             if x(self.mf):
-                print "*** applied", x
+                print("*** applied", x)
                 self._recipes.remove(x)
                 numApplied += 1
         return numApplied
@@ -520,17 +521,17 @@ if __name__ == '__main__':
     def _getRPath(self, exe):
         os.environ["S"] = exe
 
-        status, out = commands.getstatusoutput("patchelf --version")
+        status, out = subprocess.getstatusoutput("patchelf --version")
 
         if status == 0:
-            status, out = commands.getstatusoutput("patchelf --print-rpath $S")
+            status, out = subprocess.getstatusoutput("patchelf --print-rpath $S")
             if status:
                 raise RuntimeError("patchelf failed: %r" % out)
             return out.strip() or None
 
-        status, out = commands.getstatusoutput("objdump -x $S")
+        status, out = subprocess.getstatusoutput("objdump -x $S")
         if status:
-            print "WARNING: objdump failed: could not determine RPATH by running 'objdump -x %s'" % exe
+            print("WARNING: objdump failed: could not determine RPATH by running 'objdump -x %s'" % exe)
             return None
 
         tmp = re.findall("[ \t]+RPATH[ \t]*(.*)", out)
@@ -545,10 +546,10 @@ if __name__ == '__main__':
     def _setRPath(self, exe, rpath):
         os.environ["S"] = exe
         os.environ["R"] = rpath
-        print "running 'patchelf --set-rpath '%s' %s'" % (rpath, exe)
-        status, out = commands.getstatusoutput("patchelf --set-rpath $R $S")
+        print("running 'patchelf --set-rpath '%s' %s'" % (rpath, exe))
+        status, out = subprocess.getstatusoutput("patchelf --set-rpath $R $S")
         if status != 0:
-            print "WARNING: failed to set RPATH for %s: %s" % (exe, out)
+            print("WARNING: failed to set RPATH for %s: %s" % (exe, out))
 
     def ensureRPath(self, exe):
         if sys.platform not in ("linux2", "linux3", "sunos5"):
@@ -566,7 +567,7 @@ if __name__ == '__main__':
             # print "RPATH %s of %s is fine" % (current_rpath, exe)
             return
 
-        print "RPATH %r of %s needs adjustment. make sure you have the patchelf executable installed." % (current_rpath, exe)
+        print("RPATH %r of %s needs adjustment. make sure you have the patchelf executable installed." % (current_rpath, exe))
         self._setRPath(exe, expected_rpath)
 
     def __call__(self):
@@ -586,7 +587,7 @@ if __name__ == '__main__':
         # executable bit
         xconsole = os.path.join(self.distdir, "ccfreeze-console.exe")
         shutil.copy2(self.console, xconsole)
-        os.chmod(xconsole, 0755)
+        os.chmod(xconsole, 0o755)
         self.console = xconsole
 
         while 1:
@@ -632,7 +633,7 @@ if __name__ == '__main__':
             try:
                 m = getattr(self, "_handle_" + x.__class__.__name__)
             except AttributeError:
-                print "WARNING: dont know how to handle", x
+                print("WARNING: dont know how to handle", x)
                 continue
             m(x)
 
@@ -689,7 +690,7 @@ if __name__ == '__main__':
 
         dst = os.path.join(self.distdir, name + ext)
         shutil.copy2(m.filename, dst)
-        os.chmod(dst, 0755)
+        os.chmod(dst, 0o755)
         # when searching for DLL's the location matters, so don't
         # add the destination file, but rather the source file
         self.binaries.append(m.filename)
@@ -716,7 +717,7 @@ if __name__ == '__main__':
 
     def _handle_CompiledModule(self, m):
         fn = m.identifier.replace(".", "/") + '.pyc'
-        print "WARNING: using .pyc file %r for which no source file could be found." % (fn,)
+        print("WARNING: using .pyc file %r for which no source file could be found." % (fn,))
         mtime = self._get_mtime(m.filename)
         self._writecode(fn, mtime, m.code)
 
@@ -764,23 +765,23 @@ if __name__ == '__main__':
         if lm == 'symlink':
             assert os.path.dirname(src) == os.path.dirname(dst)
             os.symlink(os.path.basename(src), dst)
-            os.chmod(dst, 0755)
+            os.chmod(dst, 0o755)
         elif lm == 'hardlink':
             os.link(src, dst)
-            os.chmod(dst, 0755)
+            os.chmod(dst, 0o755)
         elif lm == 'loader':
             if gui_only and sys.platform == 'win32':
                 shutil.copy2(self.consolew, dst)
             else:
                 shutil.copy2(self.console, dst)
-            os.chmod(dst, 0755)
+            os.chmod(dst, 0o755)
 
             if self.icon and sys.platform == 'win32':
                 try:
                     from ccfreeze import winexeutil
                     # Set executable icon
                     winexeutil.set_icon(dst, self.icon)
-                except ImportError, e:
+                except ImportError as e:
                     raise RuntimeError("Cannot add icon to executable. Error: %s" % (e.message))
         else:
             raise RuntimeError("linkmethod %r not supported" % (self.linkmethod,))
@@ -798,13 +799,13 @@ if __name__ == '__main__':
     def _handle_Executable(self, m):
         dst = os.path.join(self.distdir, os.path.basename(m.filename))
         shutil.copy2(m.filename, dst)
-        os.chmod(dst, 0755)
+        os.chmod(dst, 0o755)
         self.adaptBinary(dst)
 
     def _handle_SharedLibrary(self, m):
         dst = os.path.join(self.distdir, os.path.basename(m.filename))
         shutil.copy2(m.filename, dst)
-        os.chmod(dst, 0755)
+        os.chmod(dst, 0o755)
         self.adaptBinary(dst)
 
     def showxref(self):

@@ -3,13 +3,13 @@
 import email
 import sys
 
-print unicode("hello", "utf8"), unicode("world!", "ascii")
+print(str("hello", "utf8"), str("world!", "ascii"))
 
-print "sys.path:", sys.path
-print "__file__:", __file__
-print "__name__:", __name__
+print("sys.path:", sys.path)
+print("__file__:", __file__)
+print("__name__:", __name__)
 
-print "locals():", locals()
+print("locals():", locals())
 
-print "sys.argv", sys.argv
-print "sys.executable:", sys.executable
+print("sys.argv", sys.argv)
+print("sys.executable:", sys.executable)

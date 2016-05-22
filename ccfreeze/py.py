@@ -55,12 +55,12 @@ if not sys.argv:
     sys.argv.append("")
 
 if opts.get("-c") is not None:
-    exec opts.get("-c") in main.__dict__
+    exec(opts.get("-c"), main.__dict__)
     sys.exit(0)
 
 if sys.argv[0]:
     main.__dict__['__file__'] = sys.argv[0]
-    exec open(sys.argv[0], 'r') in main.__dict__
+    exec(open(sys.argv[0], 'r'), main.__dict__)
     sys.exit(0)
 
 

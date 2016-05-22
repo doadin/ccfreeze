@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 
-import commands
+import subprocess
 import os
 import re
 import sys
@@ -84,8 +84,8 @@ if sys.platform == 'win32':
         try:
             pe = pefile.PE(path, True)
             dlls = [x.dll for x in pe.DIRECTORY_ENTRY_IMPORT]
-        except Exception, err:
-            print "WARNING: could not determine binary dependencies for %r:%s" % (path, err)
+        except Exception as err:
+            print("WARNING: could not determine binary dependencies for %r:%s" % (path, err))
             dlls = []
         return dlls
 
@@ -102,9 +102,9 @@ if sys.platform == 'win32':
                     import win32api
                 except ImportError:
 
-                    print "Warning: Cannot determine your Windows or System directories because pywin32 is not installed."
-                    print "Warning: Either install it from http://sourceforge.net/projects/pywin32/ or"
-                    print "Warning: add them to your PATH if .dlls are not found."
+                    print("Warning: Cannot determine your Windows or System directories because pywin32 is not installed.")
+                    print("Warning: Either install it from http://sourceforge.net/projects/pywin32/ or")
+                    print("Warning: add them to your PATH if .dlls are not found.")
                 else:
                     sysdir = win32api.GetSystemDirectory()
                     sysdir2 = os.path.join(sysdir, '../SYSTEM')
@@ -129,7 +129,7 @@ if sys.platform == 'win32':
                     deps.add(fp)
                     break
             else:
-                print "WARNING: could not find dll %r needed by %r in %r" % (dll, path, winpath)
+                print("WARNING: could not find dll %r needed by %r in %r" % (dll, path, winpath))
         return deps
 
     def exclude(fp):
@@ -140,7 +140,7 @@ elif sys.platform.startswith("freebsd"):
 
     def _getDependencies(path):
         os.environ["P"] = path
-        s = commands.getoutput("ldd $P")
+        s = subprocess.getoutput("ldd $P")
         res = [x for x in re.compile(r"^ *.* => (.*) \(.*", re.MULTILINE).findall(s) if x]
         return res
 
@@ -151,7 +151,7 @@ elif sys.platform.startswith("sunos5"):
 
     def _getDependencies(path):
         os.environ["P"] = path
-        s = commands.getoutput("ldd $P")
+        s = subprocess.getoutput("ldd $P")
         res = [x for x in re.compile(r"^\t* *.*=>\t* (.*)", re.MULTILINE).findall(s) if x]
         return res
 
@@ -162,7 +162,7 @@ elif sys.platform.startswith("linux"):
 
     def _getDependencies(path):
         os.environ["P"] = path
-        s = commands.getoutput("ldd $P")
+        s = subprocess.getoutput("ldd $P")
         res = [x for x in re.compile(r"^ *.* => (.*) \(.*", re.MULTILINE).findall(s) if x]
         return res
 
@@ -170,7 +170,7 @@ elif sys.platform.startswith("linux"):
         return re.match(r"^libc\.|^librt\.|^libcrypt\.|^libm\.|^libdl\.|^libpthread\.|^libnsl\.|^libutil\.|^libresolv\.|^ld-linux\.|^ld-linux-", os.path.basename(fp))
 else:
     if sys.platform != 'darwin':
-        print "Warning: don't know how to handle binary dependencies on this platform (%s)" % (sys.platform,)
+        print("Warning: don't know how to handle binary dependencies on this platform (%s)" % (sys.platform,))
 
     def _getDependencies(fp):
         return []
@@ -191,7 +191,7 @@ def getDependencies(path):
             _cache[p] = r
             return r
 
-    if not isinstance(path, basestring):
+    if not isinstance(path, str):
         deps = set()
         for p in path:
             deps.update(getDependencies(p))
@@ -212,7 +212,7 @@ def main():
     deps = getDependencies(sys.argv[1:])
     deps = list(deps)
     deps.sort()
-    print "\n".join(deps)
+    print("\n".join(deps))
 
 
 if __name__ == '__main__':

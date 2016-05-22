@@ -3,7 +3,7 @@ import sys
 
 
 def isRealModule(m):
-    from modulegraph.modulegraph import BadModule, MissingModule, ExcludedModule
+    from .modulegraph.modulegraph import BadModule, MissingModule, ExcludedModule
     if m is None or isinstance(m, (BadModule, MissingModule, ExcludedModule)):
         return False
     else:
@@ -217,7 +217,7 @@ def get_platform():
     return %r
 """ % (val,)
 
-    import codehack
+    from . import codehack
     m.code = codehack.replace_functions(m.code, repl)
     return True
 
@@ -235,7 +235,7 @@ def recipe_matplotlib(mf):
 
     mf.import_hook("matplotlib.numerix.random_array", m)
     backend_name = 'backend_' + matplotlib.get_backend().lower()
-    print "recipe_matplotlib: using the %s matplotlib backend" % (backend_name, )
+    print("recipe_matplotlib: using the %s matplotlib backend" % (backend_name, ))
     mf.import_hook('matplotlib.backends.' + backend_name, m)
     return True
 
@@ -246,18 +246,18 @@ def recipe_tkinter(mf):
         return None
 
     if sys.platform == 'win32':
-        import Tkinter
+        import tkinter
         tcldir = os.environ.get("TCL_LIBRARY")
         if tcldir:
             mf.copyTree(tcldir, "lib-tcl", m)
         else:
-            print "WARNING: recipe_tkinter: TCL_LIBRARY not set. cannot find lib-tcl"
+            print("WARNING: recipe_tkinter: TCL_LIBRARY not set. cannot find lib-tcl")
 
         tkdir = os.environ.get("TK_LIBRARY")
         if tkdir:
             mf.copyTree(tkdir, "lib-tk", m)
         else:
-            print "WARNING: recipe_tkinter: TK_LIBRARY not set. cannot find lib-tk"
+            print("WARNING: recipe_tkinter: TK_LIBRARY not set. cannot find lib-tk")
     else:
         import _tkinter
         from ccfreeze import getdeps
@@ -281,7 +281,7 @@ def recipe_tkinter(mf):
 def recipe_gtk_and_friends(mf):
     retval = False
     from ccfreeze.freezer import SharedLibrary
-    from modulegraph.modulegraph import ExcludedModule
+    from .modulegraph.modulegraph import ExcludedModule
     for x in list(mf.flatten()):
         if not isinstance(x, SharedLibrary):
             continue
@@ -290,7 +290,7 @@ def recipe_gtk_and_friends(mf):
 
         for p in prefixes:
             if x.identifier.startswith(p):
-                print "SKIPPING:", x
+                print("SKIPPING:", x)
                 x.__class__ = ExcludedModule
                 retval = True
                 break

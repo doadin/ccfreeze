@@ -4,6 +4,7 @@
 import struct
 
 import win32api
+from functools import reduce
 
 
 class Icon:

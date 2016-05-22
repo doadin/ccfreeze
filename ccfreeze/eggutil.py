@@ -136,7 +136,7 @@ def copyDistribution(distribution, destdir):
         cwd = os.getcwd()
         os.chdir(distribution.location)
         try:
-            print distribution.location, "looks like a development egg. need to run setup.py bdist_egg"
+            print(distribution.location, "looks like a development egg. need to run setup.py bdist_egg")
 
             from distutils.spawn import spawn
             import tempfile
@@ -146,9 +146,9 @@ def copyDistribution(distribution, destdir):
             atexit.register(shutil.rmtree, tmp)
             cmd = [sys.executable, "-c", "import sys,__main__,setuptools; del sys.argv[0]; __main__.__file__=sys.argv[0], execfile(sys.argv[0],__main__.__dict__,__main__.__dict__)", "setup.py", "-q", "bdist_egg", "--dist", tmp]
 
-            print "running %r in %r" % (" ".join(cmd), os.getcwd())
+            print("running %r in %r" % (" ".join(cmd), os.getcwd()))
             spawn(cmd)
-            print "====> setup.py bdist_egg finished in", os.getcwd()
+            print("====> setup.py bdist_egg finished in", os.getcwd())
             files = os.listdir(tmp)
             assert len(files) > 0, "output directory of bdist_egg command is empty"
             assert len(files) == 1, "expected exactly one file in output directory of bdist_egg command"
@@ -158,7 +158,7 @@ def copyDistribution(distribution, destdir):
             os.chdir(cwd)
 
     dest = os.path.join(destdir, distribution.egg_name() + ".egg")
-    print "Copying", location, "to", dest
+    print("Copying", location, "to", dest)
 
     entries = list(walk(location))
     name2compile = {}
@@ -177,11 +177,11 @@ def copyDistribution(distribution, destdir):
 
     mtime = int(time.time())
 
-    for x in name2compile.values():
+    for x in list(name2compile.values()):
         try:
             code = compile(x.read() + '\n', x.name, 'exec')
-        except Exception, err:
-            print "WARNING: Could not compile %r: %r" % (x.name, err)
+        except Exception as err:
+            print("WARNING: Could not compile %r: %r" % (x.name, err))
             continue
 
         data = imp.get_magic() + struct.pack("<i", mtime) + marshal.dumps(code)
