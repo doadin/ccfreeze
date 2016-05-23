@@ -1,24 +1,21 @@
 .. -*- mode: rst; coding: utf-8 -*-
 
 ======================================================================
-bbfreeze - create stand-alone executables from python scripts
+ccfreeze - create stand-alone executables from python scripts
+======================================================================
+A Fork of bbfreeze by Ralf Schmitt <ralf@systemexit.de>
 ======================================================================
 
-:Authors: Ralf Schmitt <ralf@systemexit.de>
-:Version: 1.1.4
-:Date:    2016-05-19
-:Download: https://pypi.python.org/pypi/bbfreeze/#downloads
-:Code: https://github.com/schmir/bbfreeze
-
-
-.. Note::
-
-   bbfreeze currently does not have a maintainer. If that doesn't scare you off, read on!
+:Authors: Josh Brown <cars1189@aol.com>
+:Version: 1.1.5
+:Date:    2016-05-22
+:Download: https://pypi.python.org/pypi/ccfreeze/#downloads
+:Code: https://github.com/doadin/ccfreeze
 
 
 Overview
 ======================================================================
-bbfreeze creates stand-alone executables from python scripts. It's
+ccfreeze creates stand-alone executables from python scripts. It's
 similar in purpose to the well known py2exe_ for windows, py2app_ for
 OS X, PyInstaller_ and cx_Freeze_ (in fact ancient versions were based
 on cx_Freeze. And it uses the modulegraph_ package, which is also used by
@@ -27,22 +24,22 @@ py2app).
 It has the following features:
 
 easy installation 
-  bbfreeze can be installed with setuptools' easy_install command.
+  ccfreeze can be installed with setuptools' easy_install command.
 
 zip/egg file import tracking
-  bbfreeze tracks imports from zip files and includes whole egg files
+  ccfreeze tracks imports from zip files and includes whole egg files
   if some module is used from an eggfile. Packages using setuputils'
   pkg_resources module will now work (new in 0.95.0)
 
 binary dependency tracking
-  bbfreeze will track binary dependencies and will include DLLs and
+  ccfreeze will track binary dependencies and will include DLLs and
   shared libraries needed by a frozen program.
 
 multiple script freezing
-  bbfreeze can freeze multiple scripts at once.
+  ccfreeze can freeze multiple scripts at once.
 
 python interpreter included
-  bbfreeze will create an extra executable named 'py', which might be
+  ccfreeze will create an extra executable named 'py', which might be
   used like the python executable itself.
 
 automatic pathname rewriting
@@ -52,18 +49,19 @@ automatic pathname rewriting
   local path /home/jdoe/pylib/foo/bar.py. They will instead show
   foo/bar.py)
 
-distutils command 'bdist_bbfreeze'
-  A new distutils/setuptools command bdist_bbfreeze integrates
-  bbfreeze into your setup.py.
+distutils command 'bdist_ccfreeze'
+  A new distutils/setuptools command bdist_ccfreeze integrates
+  ccfreeze into your setup.py.
 
-bbfreeze works on windows and UNIX-like operating systems. bbfreeze
-has been tested with python 2.4, 2.5, 2.6 and 2.7 bbfreeze will not
-work with python 3 or higher. bbfreeze does not work on OS X.
+ccfreeze works on windows and UNIX-like operating systems. ccfreeze
+has been tested with python 2.7 ccfreeze will not
+work with python 3 or higher.(coming eventualy) ccfreeze does not work on OS X.
 
 Contact Information
 -------------------
-bbfreeze has been developed by `brainbot technologies AG`__. Questions
-and suggestions should be send to the bbfreeze-users mailing list:
+bbfreeze has been developed by `brainbot technologies AG`__. And
+continued by my self. Questions and suggestions should be send to 
+the bbfreeze-users mailing list:
 bbfreeze-users@googlegroups.com
 
 You can subscribe by sending email to
@@ -72,19 +70,20 @@ bbfreeze-users+subscribe@googlegroups.com
 An archive is available at 
 http://groups.google.com/group/bbfreeze-users
 
-You can also reach the author via email to ralf@systemexit.de
+You can also reach the original author via email to ralf@systemexit.de
+and myself at cars1189@aol.com.
 
 Source
 -------------------
 Windows Eggs and the source code can be downloaded from 
-https://pypi.python.org/pypi/bbfreeze/.
+https://pypi.python.org/pypi/ccfreeze/ .
 
 The source code is maintained in a git repository on github:
-https://github.com/schmir/bbfreeze
+https://github.com/doadin/ccfreeze
 
 Use::
 
-  git clone https://github.com/schmir/bbfreeze.git
+  git clone https://github.com/doadin/ccfreeze.git
 
 to create a copy of the repository, then::
 
@@ -99,19 +98,18 @@ Installation
 You need to have setuptools/easy_install installed. Installation
 should be as easy as typing::
   
-  easy_install bbfreeze
+  easy_install ccfreeze
 
-This should download bbfreeze and it's dependencies modulegraph and
-altgraph and install them.
+This should download and install ccfreeze and it's dependencie altgraph.
 
 Limitations
 ---------------
 - documentation is a bit sparse
 
 
-bbfreeze - command line tool
+ccfreeze - command line tool
 ======================================================================
-bbfreeze provides a command line utility called bbfreeze, which
+ccfreeze provides a command line utility called ccfreeze, which
 freezes all python scripts given on the command line into the
 directory dist, which then contains for each script an executable and
 all dependencies needed by those executables.
@@ -134,7 +132,7 @@ Example Usage::
 
   print "sys.argv", sys.argv
   print "sys.executable:", sys.executable
-  $ bbfreeze hello-world.py
+  $ ccfreeze hello-world.py
   WARNING: found encodings in multiple directories. Assuming it's a namespace package. (found in /home/ralf/py27/lib/python2.7/encodings, /usr/lib/python2.7/encodings)
   *** applied <function recipe_doctest at 0x1f01aa0>
   *** applied <function recipe_time at 0x1f01de8>
@@ -145,9 +143,9 @@ Example Usage::
   sys.path: ['/home/ralf/bbfreeze/tests/dist/library.zip', '/home/ralf/bbfreeze/tests/dist']
   __file__: hello-world.py
   __name__: __main__
-  locals(): {'__builtins__': <module '__builtin__' (built-in)>, '__file__': 'hello-world.py', '__package__': None, 'sys': <module 'sys' (built-in)>, 'email': <module 'email' from '/home/ralf/bbfreeze/tests/dist/library.zip/email/__init__.pyc'>, '__name__': '__main__', '__doc__': None}
-  sys.argv ['/home/ralf/bbfreeze/tests/dist/hello-world']
-  sys.executable: /home/ralf/bbfreeze/tests/dist/hello-world
+  locals(): {'__builtins__': <module '__builtin__' (built-in)>, '__file__': 'hello-world.py', '__package__': None, 'sys': <module 'sys' (built-in)>, 'email': <module 'email' from '/home/ralf/ccfreeze/tests/dist/library.zip/email/__init__.pyc'>, '__name__': '__main__', '__doc__': None}
+  sys.argv ['/home/ralf/ccfreeze/tests/dist/hello-world']
+  sys.executable: /home/ralf/ccfreeze/tests/dist/hello-world
   $ dist/py
   Python 2.7.2 (default, Nov 21 2011, 17:25:27)
   [GCC 4.6.2] on linux2
@@ -157,50 +155,50 @@ Example Usage::
   >>>
 
 
-bdist_bbfreeze - distutils command
+bdist_ccfreeze - distutils command
 ======================================================================
 
-bbfreeze provides a distutils command which works much like the
-'bbfreeze' command line tool, but integrates nicely into distutils
+ccfreeze provides a distutils command which works much like the
+'ccfreeze' command line tool, but integrates nicely into distutils
 and setuptools. It collects all 'console_scripts' 'gui_scripts'
 entry-points, generates the wrapper scripts (like easy_install would
 do) and freezes these scripts.
 
-After installing bbfreeze, every setup.py which used setuptools, has a
-new command 'bdist_bbfreeze'. To show the help message just run::
+After installing ccfreeze, every setup.py which used setuptools, has a
+new command 'bdist_ccfreeze'. To show the help message just run::
 
-  python setup.py bdist_bbfreeze --help
+  python setup.py bdist_ccfreeze --help
 
 Usage examples::
 
   # freeze all scripts into ./dist/<egg_name>-<egg_version>/
-  python setup.py bdist_bbfreeze
+  python setup.py bdist_ccfreeze
 
   # same, but use tagging for "daily build" or "snapshot" releases
-  python setup.py egg_info --tag-build=dev bdist_bbfreeze
+  python setup.py egg_info --tag-build=dev bdist_ccfreeze
 
 
 
-bbfreeze - API
+ccfreeze - API
 ======================================================================
 The preferred way to use bbfreeze is by writing short python scripts,
-which use bbfreeze's API. Let's start with a short example::
+which use ccfreeze's API. Let's start with a short example::
 
-  from bbfreeze import Freezer
+  from ccfreeze import Freezer
   f = Freezer("hello-world-1.0", includes=("_strptime",))
   f.addScript("hello-world.py")
   f.addScript("hello-version.py")
   f()    # starts the freezing process
 
 
-`bbfreeze.Freezer(distdir="dist", includes=(), excludes=())`
+`ccfreeze.Freezer(distdir="dist", includes=(), excludes=())`
 instantiates a Freezer object. It will create the frozen executables
 and dependencies inside the `distdir` directory. `includes` is a list
 or tuple of modules to include, `excludes` is a list or tuple of
 modules to exclude. Note that the freezer will *delete* the directory
 `distdir` before freezing!
 
-bbfreeze.Freezer objects have the following members:
+ccfreeze.Freezer objects have the following members:
 
 - `use_compression`: flag whether to use compression inside the created
   zipfile (default True).
@@ -217,7 +215,7 @@ bbfreeze.Freezer objects have the following members:
 Recipes
 ----------------------------------------------------------------------
 Recipes provide a way to control the freezing process. Have a look at
-bbfreeze/recipes.py if you need to implement your own. Note that the
+ccfreeze/recipes.py if you need to implement your own. Note that the
 API might change.
 
 
@@ -236,9 +234,13 @@ binaries created with python 2.6 or 2.7 will need the Microsoft Visual
 C++ 2008 Redistributable Package (either the 32bit_ or the 64bit_
 version) installed on the target machine.
 
-
 Change-Log
 ======================================================================
+2016-05-22         release 1.1.5
+-----------------------------------------------
+- Update Modulegraph
+- Fix Namespacepackages
+
 2014-01-20         release 1.1.3
 -----------------------------------------------
 - Excluding Crypt32.dll
@@ -469,22 +471,23 @@ Change-Log
 2007-4-24	Initial release 0.91.0
 -----------------------------------------------
 
+
 LICENSE
 ======================================================================
-bbfreeze contains a modified copy of modulegraph, which is distributed
+ccfreeze contains a copy of modulegraph, which is distributed
 under the MIT license and is copyrighted by Bob Ippolito.
 
-bbfreeze contains a modified copy of getpath.c from the python
+ccfreeze contains a modified copy of getpath.c from the python
 distribution, which is distributed under the python software
 foundation license version 2 and copyrighted by the python software
 foundation.
 
-bbfreeze includes a module 'bdist_bbfreeze.py' which is
+ccfreeze includes a module 'bdist_ccfreeze.py' which is
 
   Copyright 2008-2012 by Hartmut Goebel <h.goebel@goebel-consult.de>
 
-The 'bdist_bbfreeze' module may be distributed under the same licence
-as bbfreeze itself.
+The 'bdist_ccfreeze' module may be distributed under the same licence
+as ccfreeze itself.
 
 
 The remaining part is distributed under the zlib/libpng license:
@@ -516,5 +519,5 @@ freely, subject to the following restrictions:
 .. _cx_Freeze: http://cx-freeze.sourceforge.net/
 .. _modulegraph: https://pypi.python.org/pypi/modulegraph
 .. __: http://brainbot.com
-.. _32bit: http://www.microsoft.com/downloads/en/details.aspx?familyid=9B2DA534-3E03-4391-8A4D-074B9F2BC1BF
-.. _64bit: http://www.microsoft.com/downloads/en/details.aspx?FamilyID=BD2A6171-E2D6-4230-B809-9A8D7548C1B6
+.. _32bit: https://www.microsoft.com/en-us/download/details.aspx?id=5582
+.. _64bit: https://www.microsoft.com/en-us/download/details.aspx?id=2092
