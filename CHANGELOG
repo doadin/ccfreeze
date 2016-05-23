@@ -1,0 +1,236 @@
+Change-Log
+======================================================================
+2015-05-22         release 1.1.5
+-----------------------------------------------
+- Update Modulegraph
+- Fix Namespacepackages
+======================================================================
+2014-01-20         release 1.1.3
+-----------------------------------------------
+- Excluding Crypt32.dll
+- Add support for SunOS (tested on SmartOS)
+- Added current python executable path to allow freezing even if
+  python is not installed (portable python, buildout)
+
+2013-07-17         release 1.1.2
+-----------------------------------------------
+- fix extension loader on python 2.4
+
+2013-07-14         release 1.1.1
+-----------------------------------------------
+- Adding icon for executables on windows. Added SetIcon method to
+  Freezer. Winexeutil uses win32api so pywin32 must be installed to
+  use.
+- unconditionally copy console.exe to dist dir and ensure permissions
+  are usable
+
+2013-04-10         release 1.1.0
+-----------------------------------------------
+- bbfreeze has been split into bbfreeze-loader package and a pure
+  python bbfreeze module. this should allow me to make more regular
+  releases.
+- add recipe for lxml.etree
+- don't pollute module namespace while importing
+- don't pollute the modules namespace in EXTENSION_LOADER_SOURCE
+- make sure we use absolute imports in EXTENSION_LOADER_SOURCE
+- do not pick up bbfreeze/__main__.py when freezing bbfreeze/py.py
+- fix 'googlegroup subscribe' address
+- fix bdist_egg procedure when setuptools is not importable
+- fix the bdist_egg procedure when running under buildout
+- normalize package names in 'dont_copy_as_egg'
+- only execute entry point scripts when called as __main__
+- use a project specific name for egg-info directories
+- don't install PyXML as egg since it won't work
+- add addEntryPoint method
+- copy egg-info directories
+- rename bb-freeze to bbfreeze
+- rely on setuptools/distribute being installed
+- shorten and simplify extension loader
+- use absolute imports in the extension loader to load stdlib modules
+
+2012-10-23         release 1.0.2
+-----------------------------------------------
+- use altgraph 0.9 as 0.10 is incompatible
+
+2012-09-27         release 1.0.1
+-----------------------------------------------
+- update links to alternative freezers
+- skip libresolv.so, which is a part of glibc
+- call patchelf for anything which looks like a binary
+
+2012-02-08         release 1.0.0
+-----------------------------------------------
+- better test infrastructure
+- update documentation
+- remove bbfreeze.macholib
+- fix build on ubuntu 11.10
+- handle platform=='linux3' case in ensureRPath
+- make py recipe work again.
+- handle "pip -e" installed development eggs, that aren't even setuptools packages
+
+
+2011-04-12         release 0.97.3
+-----------------------------------------------
+- exclude ms-win-api-* and query.dll.
+- make py parse minimal set of options required to run py.test on the
+  frozen executable.
+- link with /LARGEADDRESSAWARE on win32
+- ensure RPATH of application loader has the right value. try to fix
+  it with patchelf if not.
+- set dont_write_bytecode and no_user_site flags if they are
+  available.
+- handle pip installed namespace packages
+
+2010-10-12         release 0.97.2
+-----------------------------------------------
+- workaround console.exe not being executable.
+- switch to ez_setup.py from setuptools-0.6c11.
+- make win32com work by using a temporary directory as it's
+  __gen_path__.
+
+2010-08-19         release 0.97.1
+-----------------------------------------------
+- add missing README.rst file.
+
+2010-08-17         release 0.97.0
+-----------------------------------------------
+- make it compatible with latest altgraph
+- add recipe for gevent
+- fix build on latest ubuntu
+
+2008-09-18         release 0.96.5
+-----------------------------------------------
+- added distutils command 'bdist_bbfreeze' contributed by Hartmut
+  Goebel
+- executables are now stripped with the 'strip' command. This makes a
+  difference in file size when using a static libpython.a.
+
+2008-8-29         release 0.96.4
+-----------------------------------------------
+- record previously missing dependencies for subpackage imports. This
+  bug only showed up when dependencies where explicitly removed.
+
+2008-8-18	  release 0.96.3
+-----------------------------------------------
+- fix issues with some packages, which where wrongly
+  recognized as development eggs
+
+2008-8-5	  release 0.96.2
+-----------------------------------------------
+- a slightly patched getpath.c from python trunk has been
+  added. This should fix sys.getfilesystemencoding() for statically
+  linked python. We also try to link with the static library in case
+  the shared one has been linked with -Bsymbolic (which makes it
+  impossible to override the necessary symbols). This happens e.g. on
+  Ubuntu 8.04.
+- __file__ in the main program now has a .py suffix. This prevents
+  garbage output from the warnings module.
+- some recipes have been added (mostly breaking some unneeded
+  dependencies).
+- explicit recipes for the email module have been added. the email
+  module isn't added as a whole.
+- the setup script now reports the configuration used.
+- bbfreeze now tracks dependencies from eggs (i.e. dependencies
+  specified in the egg's setup.py script).
+
+
+2008-3-14         release 0.96.1
+-----------------------------------------------
+- fix bug in an internal function, which determines if eggs should 
+  be used. It always returned False, so eggs where never packaged.
+
+2008-3-13         release 0.96.0
+-----------------------------------------------
+- some egg packages have the site-packages directory as their
+  location, which resulted in the whole site-packages directory being 
+  copied as some egg file.
+- fix issue with wxPython
+- add recipe for mercurial
+- handle development eggs ("python setup.py develop") by running
+  setup.py bdist_egg
+- handle easy install entry scripts
+- add recipe for kinterbasdb (thanks to Werner F. Bruhin)
+- fix LD_RUN_PATH issue, when --enable--new-dtags is the default for
+  linking (e.g. on gentoo). (thanks to Collin Day)
+
+2007-12-6         release 0.95.4
+-----------------------------------------------
+- workaround for virtualenv
+- show execution time in py
+
+2007-10-16        release 0.95.3
+-----------------------------------------------
+- recipes for pythoncom/pywintypes have been added
+- make sys.getfilesystemencoding() work like in non-frozen versions
+- automatic pathname rewriting
+- make stdin, stdout and stderr unbuffered in frozen programs
+
+
+2007-7-12       release 0.95.2
+-----------------------------------------------
+- fix issues with c modules with suffix 'module.so',
+  e.g. zlibmodule.so, timemodule.so, ... (fedora core 7 uses that
+  naming scheme; thanks to Neil Becker for reporting)
+  The frozen executable did bail out with zipimport.ZipImportError:
+  can't decompress data; zlib not available".
+
+2007-7-11       release 0.95.1
+-----------------------------------------------
+- compile .py files from eggs when there is no accompanying .pyc file
+- skip egg/zip files in find_all_packages (makes some recipes work)
+
+2007-7-6       release 0.95.0
+-----------------------------------------------
+- support for egg files: bbfreeze scans zipped egg files and now
+  includes whole egg files/directories in the distribution. Programs
+  using setuptools' pkg_resources module will now work (thanks to
+  Eirik Svendsen for testing this).
+
+2007-6-28      release 0.94.1
+-----------------------------------------------
+- fix bug in setup script, now the patched modulegraph is really used
+- better recipe handling
+
+2007-6-22      release 0.94.0
+-----------------------------------------------
+- support relative imports (backported from modulefinder, bbfreeze now
+  ships with its' own patched copy of modulegraph).
+- fix xml/_xmlplus issues
+- add recipe for cElementTree
+
+2007-5-31      release 0.93.2
+-----------------------------------------------
+- include tcl/tk runtime files (really makes Tkinter work)
+- exclude gtk, pango and friends (i.e. they must be installed on
+  the target system)
+
+2007-5-14      release 0.93.1
+-----------------------------------------------
+- make py executable work when readline is not installed
+- fix dll search path issue (makes Tkinter work)
+
+2007-5-3       release 0.93.0
+-----------------------------------------------
+- dependency on libpython.so should now always be recognized
+- support for namespace packages
+- basic support for zipfiles/eggs (bbfreeze will scan zipfiles/eggs
+  for dependencies and will implement a dummy pkg_resources.require in
+  frozen executables). Note that the remaining pkg_resources
+  functionality just isn't available.
+- documentation updates
+
+
+2007-4-27       release 0.92.0
+-----------------------------------------------
+- better binary dependency cache handling
+- fix recipe for time module on windows
+- use pefile module on windows for binary dependency tracking
+- add gui_only flag to addScript method (which builds GUI programs
+  on windows, i.e. without console)
+- strip shared libraries on non windows platforms
+- add showxref method
+- working recipe for py.magic.greenlet
+
+
+2007-4-24	Initial release 0.91.0
+-----------------------------------------------
