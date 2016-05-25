@@ -34,7 +34,7 @@ def addldlibrarypath():
     if p not in paths:
         paths.insert(0, p)
         os.environ[LD_LIBRARY_PATH] = os.pathsep.join(paths)
-        # print "SETTING", LD_LIBRARY_PATH, os.environ[LD_LIBRARY_PATH]
+        # print("SETTING", LD_LIBRARY_PATH, os.environ[LD_LIBRARY_PATH])
         os.execv(sys.executable, sys.argv)
 
 
@@ -49,7 +49,7 @@ def addpath():
     if p not in paths:
         paths.insert(0, p)
         os.environ['PATH'] = os.pathsep.join(paths)
-        # print "SETTING PATH:", os.environ['PATH']
+        # print("SETTING PATH:", os.environ['PATH'])
 
 
 def addtcltk():
@@ -70,7 +70,7 @@ def fixwin32com():
         return
 
     # hide imports by using exec. ccfreeze analyzes this file.
-    exec """
+    exec("""
 try:
     import win32com.client
     import win32com.gen_py
@@ -85,10 +85,10 @@ else:
         os.makedirs(tmpdir)
     win32com.__gen_path__ = tmpdir
     win32com.gen_py.__path__=[tmpdir]
-"""
+""")
 
-# print "EXE:", sys.executable
-# print "SYS.PATH:", sys.path
+# print("EXE:", sys.executable)
+# print("SYS.PATH:", sys.path)
 
 addpath()
 # if sys.platform!='win32': # and hasattr(os, 'execv'):
@@ -118,7 +118,7 @@ while 1:
     # if exe is a-b-c, try loading a-b-c, a-b and a
     try:
         code = importer.get_code("__main__%s__" % exe)
-    except zipimport.ZipImportError, err:
+    except zipimport.ZipImportError as err:
         if '-' in exe:
             exe = exe[:exe.find('-')]
         else:
@@ -126,6 +126,6 @@ while 1:
     else:
         break
 if exe == "py":
-    exec code
+    exec(code)
 else:
-    exec code in m.__dict__
+    exec(code, m.__dict__)

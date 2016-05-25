@@ -1,5 +1,9 @@
 import os
-import Tkinter
+
+if sys.version_info[0] >= 3:
+    import tkinter
+else:
+    import Tkinter
 
 
 def main():
@@ -7,7 +11,7 @@ def main():
 
     def show(n):
         m = "%s: %s" % (n, os.environ.get(n))
-        print m
+        print(m)
         return m
 
     msg += "\n" + show("TCL_LIBRARY")

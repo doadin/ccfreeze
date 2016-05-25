@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import struct
+import sys
 
 import win32api
 
@@ -100,7 +101,11 @@ def set_icon(exe_filename, ico_filename):
     hdst = win32api.BeginUpdateResource(exe_filename, 0)
 
     # Update entries
-    data = icon._header + reduce(str.__add__, icon._entries)
+    if sys.version_info[0] >= 3:
+        from functools import reduce
+        data = icon._header + reduce(str.__add__, icon._entries)
+    else:
+        data = icon._header + reduce(str.__add__, icon._entries)
     win32api.UpdateResource(hdst, 14, 1, data)
 
     # Update images

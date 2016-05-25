@@ -19,7 +19,7 @@ def compile_and_run(p):
 
 
 def maybe_compile_and_run(x):
-    print "\n\n-----------------> building", x, "<------------"
+    print("\n\n-----------------> building", x, "<------------")
 
     assert os.path.exists(x)
     os.environ['S'] = fullpath(x)
@@ -27,7 +27,7 @@ def maybe_compile_and_run(x):
     if err == 0:
         compile_and_run(x)
     else:
-        print "failed"
+        print("failed")
 
 
 def test_ex_time():

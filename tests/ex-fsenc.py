@@ -3,4 +3,4 @@
 import os
 import sys
 
-print sys.getfilesystemencoding(), os.environ.get("LANG", "<>")
+print(sys.getfilesystemencoding(), os.environ.get("LANG", "<>"))
