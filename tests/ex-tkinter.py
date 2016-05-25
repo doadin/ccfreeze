@@ -7,7 +7,7 @@ def main():
 
     def show(n):
         m = "%s: %s" % (n, os.environ.get(n))
-        print m
+        print(m)
         return m
 
     msg += "\n" + show("TCL_LIBRARY")
