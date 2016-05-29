@@ -16,7 +16,7 @@ def check_encoding():
     if os.path.isfile(file):
         enc_frozen = py.path.local("dist/ex-fsenc").sysexec()
         assert enc == enc_frozen
-    except:
+    else:
         print("File not found")
 
 
