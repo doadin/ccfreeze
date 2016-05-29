@@ -10,6 +10,7 @@ env:
   - TOX_ENV=isort
   - TOX_ENV=pytest
   - TOX_ENV=newloader
+
 matrix:
   allow_failures:
   - env: TOX_ENV=newloader
@@ -26,6 +27,8 @@ matrix:
 
 install:
   - pip install tox
+
+before_script: if [[ $TRAVIS_PYTHON_VERSION == 3.5 ]]; then pip install https://github.com/doadin/ccfreeze_loader/archive/master-test-py3.zip --no-cache-dir
 
 script:
   - tox -e $TOX_ENV
