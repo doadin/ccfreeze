@@ -3,12 +3,27 @@ python:
   - "2.7"
 #  - "3.3"
 #  - "3.4"
-#  - "3.5"
+  - "3.5"
 env:
   - TOX_ENV=docs
   - TOX_ENV=flake8
   - TOX_ENV=isort
   - TOX_ENV=pytest
+  - TOX_ENV=newloader
+
+matrix:
+  allow_failures:
+  - env: TOX_ENV=newloader
+  - python: "3.5"
+    env: TOX_ENV=docs
+  - python: "3.5"
+    env: TOX_ENV=flake8
+  - python: "3.5"
+    env: TOX_ENV=isort
+  - python: "3.5"
+    env: TOX_ENV=pytest
+  - python: "3.5"
+    env: TOX_ENV=newloader
 
 install:
   - pip install tox
