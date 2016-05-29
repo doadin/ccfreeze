@@ -11,8 +11,11 @@ pyexe = py.path.local(sys.executable)
 def check_encoding():
     enc = pyexe.sysexec("ex-fsenc.py")
     print("ENC:", enc)
-    enc_frozen = py.path.local("dist/ex-fsenc").sysexec()
-    assert enc == enc_frozen
+    if os.path.isfile(py.path.local("dist/ex-fsenc"))
+        enc_frozen = py.path.local("dist/ex-fsenc").sysexec()
+        assert enc == enc_frozen
+    except:
+        print("File not found")
 
 
 def test_getfilesystemencoding(monkeypatch):
