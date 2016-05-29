@@ -29,7 +29,7 @@ install:
   - pip install tox
 
 before_script: 
-  - if [[ $TRAVIS_PYTHON_VERSION == 3.5 ]]; then pip install https://github.com/doadin/ccfreeze_loader/archive/master-test-py3.zip --no-cache-dir
+  - if [[ $TRAVIS_PYTHON_VERSION == 3.5 ]]; then pip install https://github.com/doadin/ccfreeze_loader/archive/master-test-py3.zip --no-cache-dir; fi
 
 script:
   - tox -e $TOX_ENV
