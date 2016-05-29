@@ -13,11 +13,10 @@ def check_encoding():
     print("ENC:", enc)
     file = py.path.local("dist/ex-fsenc")
     print(file)
-    if os.path.isfile(file):
-        enc_frozen = py.path.local("dist/ex-fsenc").sysexec()
-        assert enc == enc_frozen
-    else:
-        print("File not found")
+    enc_frozen = py.path.local("dist/ex-fsenc").sysexec()
+    print("ENC_FORZEN:", enc_frozen)
+    assert enc == enc_frozen
+    
 
 
 def test_getfilesystemencoding(monkeypatch):
