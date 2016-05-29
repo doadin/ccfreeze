@@ -12,7 +12,7 @@ def check_encoding():
     enc = pyexe.sysexec("ex-fsenc.py")
     print("ENC:", enc)
     file = py.path.local("dist/ex-fsenc")
-    print(file)
+        raise err
     enc_frozen = py.path.local("dist/ex-fsenc").sysexec()
     print("ENC_FORZEN:", enc_frozen)
     assert enc == enc_frozen
