@@ -6,6 +6,9 @@ ccfreeze - create stand-alone executables from python scripts
 A Fork of bbfreeze by Ralf Schmitt <ralf@systemexit.de>
 ======================================================================
 
+.. image:: https://travis-ci.org/doadin/ccfreeze.svg?branch=mymaster
+   :target: https://travis-ci.org/doadin/ccfreeze
+
 :Authors: Josh Brown <cars1189@aol.com>
 :Version: 1.1.5
 :Date:    2016-05-22
